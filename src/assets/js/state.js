@@ -21,16 +21,20 @@ export const state = reactive({
         }
         return shuffleAnswers
     },
-
+    replaceSpecialCharacters(text) {
+        //console.log(typeof text);
+        //console.log(text.replace(/&quot;/g, '"').replace(/&#039;/g, "'"));
+        return text.replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&euml;/g, "ë").replace(/&eacute;/g, "é")
+    },
 
     getQuizs() {
         axios
             .get("https://opentdb.com/api.php?amount=3&type=multiple")
             .then(response => {
-                console.log(response.data.results);
+                //console.log(response.data.results);
                 //riassegno a quizs l'array di quiz
                 this.quizs = response.data.results;
-                console.log(this.quizs);
+                //console.log(this.quizs);
 
                 //mappa l'array quizs affinchè si crei un array options che mi deve restituire un oggetto
                 this.options = this.quizs.map(quiz => {
@@ -49,7 +53,7 @@ export const state = reactive({
                     return { shuffledAnswers, correctAnswerIndex }
 
                 })
-                console.log(this.options);
+                //console.log(this.options);
             })
     }
 })
